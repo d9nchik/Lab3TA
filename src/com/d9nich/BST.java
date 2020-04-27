@@ -1,8 +1,9 @@
 package com.d9nich;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class BST<E extends Comparable<E>> implements Tree<E> {
+public class BST<E extends Comparable<E>> implements Tree<E>, Serializable {
     protected TreeNode<E> root;
     protected int size = 0;
 
@@ -227,7 +228,7 @@ public class BST<E extends Comparable<E>> implements Tree<E> {
      * This inner class is static, because it does not access
      * any instance members defined in its outer class
      */
-    public static class TreeNode<E> {
+    public static class TreeNode<E> implements Serializable {
         protected E element;
         protected TreeNode<E> left;
         protected TreeNode<E> right;

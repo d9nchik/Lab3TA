@@ -10,7 +10,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.io.*;
+
 public class BSTAnimation extends Application {
+    private BST<Integer> tree = new AVLTree<>(); // Create a tree
 
     public static void main(String[] args) {
         launch(args);
@@ -18,7 +21,20 @@ public class BSTAnimation extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        BST<Integer> tree = new AVLTree<>(); // Create a tree
+
+
+        final File file = new File("output.dat");
+        if (file.exists()) {
+            try (ObjectInputStream inputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+                tree = (AVLTree<Integer>) (inputStream.readObject());
+            } catch (FileNotFoundException ex) {
+                System.out.println("File not found");
+            } catch (IOException ex) {
+                System.out.println("Problem with stream");
+            } catch (ClassNotFoundException ex) {
+                System.out.println("Class not found");
+            }
+        }
 
         BorderPane pane = new BorderPane();
         BTView view = new BTView(tree); // Create a View
@@ -64,6 +80,18 @@ public class BSTAnimation extends Application {
         primaryStage.setTitle("BSTAnimation"); // Set the stage title
         primaryStage.setScene(scene); // Place the scene in the stage
         primaryStage.show(); // Display the stage
+        view.displayTree();
+
+        primaryStage.setOnCloseRequest(e -> {
+            try (ObjectOutputStream outputStream = new ObjectOutputStream(new BufferedOutputStream(
+                    new FileOutputStream(file)))) {
+                outputStream.writeObject(tree);
+            } catch (FileNotFoundException ex) {
+                System.out.println("File not found!");
+            } catch (IOException ex) {
+                System.out.println("Stream problem");
+            }
+        });
 
     }
 }
