@@ -1,5 +1,6 @@
 package com.d9nich.AVL;
 
+import com.d9nich.Field;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -9,9 +10,9 @@ import javafx.scene.text.Text;
 public class BTView extends Pane {
     private final double radius = 15; // Tree node radius
     private final double vGap = 50; // Gap between two levels in a tree
-    private BST<Integer> tree = new BST<>();
+    private BST<Field> tree = new BST<>();
 
-    public BTView(BST<Integer> tree) {
+    public BTView(BST<Field> tree) {
         this.tree = tree;
         setStatus("Tree is empty");
     }
@@ -32,7 +33,7 @@ public class BTView extends Pane {
     /**
      * Display a subtree rooted at position (x, y)
      */
-    private void displayTree(BST.TreeNode<Integer> root,
+    private void displayTree(BST.TreeNode<Field> root,
                              double x, double y, double hGap) {
         if (root.left != null) {
             // Draw a line to the left node
@@ -53,7 +54,7 @@ public class BTView extends Pane {
         circle.setFill(Color.WHITE);
         circle.setStroke(Color.BLACK);
         getChildren().addAll(circle,
-                new Text(x - 4, y + 4, root.element + ""));
+                new Text(x - 4, y + 4, root.element.getKey() + ""));
     }
 }
 

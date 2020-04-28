@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import java.io.*;
 
 public class BSTAnimation extends Application {
-    private BST<Integer> tree = new AVLTree<>(); // Create a tree
+    private BST<Field> tree = new AVLTree<>(); // Create a tree
 
     public static void main(String[] args) {
         launch(args);
@@ -29,7 +29,7 @@ public class BSTAnimation extends Application {
         final File file = new File("output.dat");
         if (file.exists()) {
             try (ObjectInputStream inputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-                tree = (AVLTree<Integer>) (inputStream.readObject());
+                tree = (AVLTree<Field>) (inputStream.readObject());
             } catch (FileNotFoundException ex) {
                 System.out.println("File not found");
             } catch (IOException ex) {
@@ -45,22 +45,26 @@ public class BSTAnimation extends Application {
 
         TextField tfKey = new TextField();
         tfKey.setPrefColumnCount(3);
+        TextField tfValue = new TextField();
+        tfValue.setPrefColumnCount(5);
         tfKey.setAlignment(Pos.BASELINE_RIGHT);
         Button btInsert = new Button("Insert");
         Button btDelete = new Button("Delete");
         HBox hBox = new HBox(5);
-        hBox.getChildren().addAll(new Label("Enter a key: "),
-                tfKey, btInsert, btDelete);
+        hBox.getChildren().addAll(new Label("Enter a key: "), tfKey
+                , new Label("Enter a value: "), tfValue, btInsert, btDelete);
         hBox.setAlignment(Pos.CENTER);
         pane.setBottom(hBox);
 
         btInsert.setOnAction(e -> {
             int key = Integer.parseInt(tfKey.getText());
-            if (tree.search(key)) { // key is in the tree already
+            String value = tfValue.getText();
+            Field field = new Field(key, value);
+            if (tree.search(field)) { // key is in the tree already
                 view.displayTree();
                 view.setStatus(key + " is already in the tree");
             } else {
-                tree.insert(key); // Insert a new key
+                tree.insert(field); // Insert a new key
                 view.displayTree();
                 view.setStatus(key + " is inserted in the tree");
             }
@@ -68,11 +72,13 @@ public class BSTAnimation extends Application {
 
         btDelete.setOnAction(e -> {
             int key = Integer.parseInt(tfKey.getText());
-            if (!tree.search(key)) { // key is not in the tree
+            String value = tfValue.getText();
+            Field field = new Field(key, value);
+            if (!tree.search(field)) { // key is not in the tree
                 view.displayTree();
                 view.setStatus(key + " is not in the tree");
             } else {
-                tree.delete(key); // Delete a key
+                tree.delete(field); // Delete a key
                 view.displayTree();
                 view.setStatus(key + " is deleted from the tree");
             }
