@@ -6,6 +6,7 @@ import java.util.Arrays;
 public class BST<E extends Comparable<E>> implements Tree<E>, Serializable {
     protected TreeNode<E> root;
     protected int size = 0;
+    private static int counter;
 
     /**
      * Create an empty binary tree
@@ -37,18 +38,26 @@ public class BST<E extends Comparable<E>> implements Tree<E>, Serializable {
         return false;
     }
 
+    public static int getCounter() {
+        return counter;
+    }
+
     public E searchAndReturn(E e) {
         TreeNode<E> current = root; // Start from the root
-
+        counter = 0;
         while (current != null) {
+            counter += 2;
             if (e.compareTo(current.element) < 0) {
                 current = current.left;
             } else if (e.compareTo(current.element) > 0) {
+                counter++;
                 current = current.right;
-            } else // element matches current.element
+            } else { // element matches current.element
+                counter++;
                 return current.element; // Element is found
+            }
         }
-
+        counter++;
         return null;
     }
 
