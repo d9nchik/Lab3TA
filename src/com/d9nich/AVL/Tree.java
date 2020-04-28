@@ -1,4 +1,4 @@
-package com.d9nich;
+package com.d9nich.AVL;
 
 import java.util.Collection;
 

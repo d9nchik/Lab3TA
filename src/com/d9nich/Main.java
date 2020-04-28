@@ -1,5 +1,8 @@
 package com.d9nich;
 
+import com.d9nich.AVL.AVLTree;
+import com.d9nich.AVL.BST;
+
 public class Main {
 
     public static void main(String[] args) {

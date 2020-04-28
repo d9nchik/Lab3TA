@@ -1,5 +1,8 @@
 package com.d9nich;
 
+import com.d9nich.AVL.AVLTree;
+import com.d9nich.AVL.BST;
+import com.d9nich.AVL.BTView;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

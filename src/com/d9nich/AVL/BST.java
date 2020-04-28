@@ -1,4 +1,4 @@
-package com.d9nich;
+package com.d9nich.AVL;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -35,6 +35,21 @@ public class BST<E extends Comparable<E>> implements Tree<E>, Serializable {
         }
 
         return false;
+    }
+
+    public E searchAndReturn(E e) {
+        TreeNode<E> current = root; // Start from the root
+
+        while (current != null) {
+            if (e.compareTo(current.element) < 0) {
+                current = current.left;
+            } else if (e.compareTo(current.element) > 0) {
+                current = current.right;
+            } else // element matches current.element
+                return current.element; // Element is found
+        }
+
+        return null;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.d9nich;
+package com.d9nich.AVL;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -11,7 +11,7 @@ public class BTView extends Pane {
     private final double vGap = 50; // Gap between two levels in a tree
     private BST<Integer> tree = new BST<>();
 
-    BTView(BST<Integer> tree) {
+    public BTView(BST<Integer> tree) {
         this.tree = tree;
         setStatus("Tree is empty");
     }

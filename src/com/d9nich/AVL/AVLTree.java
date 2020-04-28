@@ -1,4 +1,4 @@
-package com.d9nich;
+package com.d9nich.AVL;
 
 public class AVLTree<E extends Comparable<E>> extends BST<E> {
     /**
