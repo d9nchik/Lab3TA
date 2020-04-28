@@ -3,6 +3,9 @@ package com.d9nich;
 import com.d9nich.AVL.AVLTree;
 import com.d9nich.AVL.BST;
 import com.d9nich.AVL.BTView;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.*;
 
@@ -93,16 +97,7 @@ public class BSTAnimation extends Application {
         primaryStage.show(); // Display the stage
         view.displayTree();
 
-        primaryStage.setOnCloseRequest(e -> {
-            try (ObjectOutputStream outputStream = new ObjectOutputStream(new BufferedOutputStream(
-                    new FileOutputStream(file)))) {
-                outputStream.writeObject(tree);
-            } catch (FileNotFoundException ex) {
-                System.out.println("File not found!");
-            } catch (IOException ex) {
-                System.out.println("Stream problem");
-            }
-        });
+        primaryStage.setOnCloseRequest(e -> saveData(file));
 
         btChange.setOnAction(e -> {
             int key = Integer.parseInt(tfKey.getText());
@@ -132,5 +127,20 @@ public class BSTAnimation extends Application {
             }
         });
 
+        Timeline animation = new Timeline(new KeyFrame(Duration.minutes(5), e -> saveData(file)));
+        animation.setCycleCount(Animation.INDEFINITE);
+        animation.play();
+
+    }
+
+    private void saveData(File file) {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new BufferedOutputStream(
+                new FileOutputStream(file)))) {
+            outputStream.writeObject(tree);
+        } catch (FileNotFoundException ex) {
+            System.out.println("File not found!");
+        } catch (IOException ex) {
+            System.out.println("Stream problem");
+        }
     }
 }
