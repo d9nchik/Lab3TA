@@ -50,9 +50,11 @@ public class BSTAnimation extends Application {
         tfKey.setAlignment(Pos.BASELINE_RIGHT);
         Button btInsert = new Button("Insert");
         Button btDelete = new Button("Delete");
+        Button btChange = new Button("Change");
+        Button btGet = new Button("Get");
         HBox hBox = new HBox(5);
         hBox.getChildren().addAll(new Label("Enter a key: "), tfKey
-                , new Label("Enter a value: "), tfValue, btInsert, btDelete);
+                , new Label("Enter a value: "), tfValue, btInsert, btDelete, btChange, btGet);
         hBox.setAlignment(Pos.CENTER);
         pane.setBottom(hBox);
 
@@ -85,7 +87,7 @@ public class BSTAnimation extends Application {
         });
 
         // Create a scene and place the pane in the stage
-        Scene scene = new Scene(pane, 450, 250);
+        Scene scene = new Scene(pane, 500, 250);
         primaryStage.setTitle("BSTAnimation"); // Set the stage title
         primaryStage.setScene(scene); // Place the scene in the stage
         primaryStage.show(); // Display the stage
@@ -99,6 +101,34 @@ public class BSTAnimation extends Application {
                 System.out.println("File not found!");
             } catch (IOException ex) {
                 System.out.println("Stream problem");
+            }
+        });
+
+        btChange.setOnAction(e -> {
+            int key = Integer.parseInt(tfKey.getText());
+            String value = tfValue.getText();
+            Field myField = tree.searchAndReturn(new Field(key, value));
+            if (myField != null) {
+                myField.setValue(value);
+                view.displayTree();
+                view.setStatus(key + " value changed to " + value);
+            } else {
+                view.displayTree();
+                view.setStatus(key + " is not in the tree");
+            }
+        });
+
+        btGet.setOnAction(e -> {
+            int key = Integer.parseInt(tfKey.getText());
+            String value = tfValue.getText();
+            Field myField = tree.searchAndReturn(new Field(key, value));
+            if (myField != null) {
+                tfValue.setText(myField.getValue());
+                view.displayTree();
+                view.setStatus(key + " value is " + myField.getValue());
+            } else {
+                view.displayTree();
+                view.setStatus(key + " is not in the tree");
             }
         });
 

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Field implements Serializable, Comparable<Field> {
     private static int defaultKey = 0;
-    private int key;
+    private final int key;
     private String value;
 
     public Field(String value) {
@@ -22,10 +22,6 @@ public class Field implements Serializable, Comparable<Field> {
 
     public int getKey() {
         return key;
-    }
-
-    public void setKey(int key) {
-        this.key = key;
     }
 
     public String getValue() {
