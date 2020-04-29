@@ -30,9 +30,9 @@ public class BSTAnimation extends Application {
     public void start(Stage primaryStage) {
 
 
-        final File file = new File("output.dat");
-        if (file.exists()) {
-            try (ObjectInputStream inputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+        final File dataDase = new File("output.dat");
+        if (dataDase.exists()) {
+            try (ObjectInputStream inputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(dataDase)))) {
                 tree = (AVLTree<Field>) (inputStream.readObject());
             } catch (FileNotFoundException ex) {
                 System.out.println("File not found");
@@ -97,7 +97,7 @@ public class BSTAnimation extends Application {
         primaryStage.show(); // Display the stage
         view.displayTree();
 
-        primaryStage.setOnCloseRequest(e -> saveData(file));
+        primaryStage.setOnCloseRequest(e -> saveData(dataDase));
 
         btChange.setOnAction(e -> {
             int key = Integer.parseInt(tfKey.getText());
@@ -127,7 +127,7 @@ public class BSTAnimation extends Application {
             }
         });
 
-        Timeline animation = new Timeline(new KeyFrame(Duration.minutes(5), e -> saveData(file)));
+        Timeline animation = new Timeline(new KeyFrame(Duration.minutes(5), e -> saveData(dataDase)));
         animation.setCycleCount(Animation.INDEFINITE);
         animation.play();
 
